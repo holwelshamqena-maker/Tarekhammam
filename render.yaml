@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: banrify-ai
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MANUS_API_URL
+        sync: false
+      - key: MANUS_API_KEY
+        sync: false
