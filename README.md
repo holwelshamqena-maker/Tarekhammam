@@ -59,7 +59,17 @@ GitHub Pages يشغّل HTML فقط، لذلك لا يكفي لتوليد الص
 
 ### إذا استضفت الواجهة على GitHub Pages منفصلة
 
-عدّل في `index.html` قيمة `API_BASE` لتكون رابط خادم Render، ثم ارفع الملف مجددًا. الأفضل نشر الواجهة والخادم معًا لأن الخادم يخدم `index.html` ويعالج `/api/generate`.
+لا تجعل `API_BASE` فارغًا؛ GitHub Pages لا يشغّل `server.mjs`. بعد نشر الخادم على Render، أضف هذا السطر قبل سطر `const API_BASE` في `index.html`:
+
+```html
+<script>
+window.BANRIFY_API_URL = 'https://اسم-الخدمة.onrender.com';
+</script>
+```
+
+استبدل الرابط برابط Render الحقيقي ثم ارفع `index.html` مجددًا إلى GitHub. إذا ظهر خطأ `Unexpected token '<'` فهذا يعني أن الواجهة استدعت GitHub Pages أو رابطًا يعيد HTML بدل رابط الخادم الذي يعيد JSON من `/api/generate`.
+
+الطريقة الأسهل: انشر المشروع كاملًا على Render؛ عندها لا تحتاج `API_BASE` لأن `server.mjs` يخدم الواجهة ويعالج `/api/generate` من نفس الرابط.
 
 ## الأمان
 
