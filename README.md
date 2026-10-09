@@ -1,76 +1,54 @@
-# Banrify AI
+# Banrify AI + Gemini على Vercel
 
-واجهة عربية بسيطة لإنشاء بنرات حقيقية بالذكاء الاصطناعي.
+## 1) نشر هذا المجلد على Vercel
 
-## الملفات
+ارفع محتويات هذا المجلد إلى مستودع GitHub جديد، ثم في Vercel اختر:
 
-- `index.html`: الواجهة الأمامية.
-- `server.mjs`: خادم Node.js يحمي مفتاح الخدمة ويستدعي مولّد الصور.
-- `package.json`: أمر التشغيل.
-- `render.yaml`: إعداد نشر جاهز على Render.
+`Add New → Project → Import` ثم اختر المستودع واضغط `Deploy`.
 
-## التشغيل محليًا
+## 2) إضافة مفتاح Gemini
 
-يتطلب Node.js 18 أو أحدث.
+في Vercel افتح:
 
-```bash
-npm install
-export MANUS_API_URL="ضع_رابط_خدمة_Manus_هنا"
-export MANUS_API_KEY="ضع_المفتاح_هنا"
-npm start
+`Project → Settings → Environment Variables`
+
+أضف:
+
+```text
+Key: GEMINI_API_KEY
+Value: مفتاح Gemini الجديد
 ```
 
-افتح: `http://localhost:8787`
+ثم اذهب إلى `Deployments` واضغط `Redeploy`.
 
-في Windows PowerShell:
+## 3) اختبار الخدمة
 
-```powershell
-$env:MANUS_API_URL="ضع_رابط_خدمة_Manus_هنا"
-$env:MANUS_API_KEY="ضع_المفتاح_هنا"
-npm start
+افتح:
+
+```text
+https://اسم-مشروعك.vercel.app/api/health
 ```
 
-## رفع الكود إلى GitHub
+ويجب أن تظهر:
 
-```bash
-git init
-git add .
-git commit -m "Initial Banrify AI app"
-git branch -M main
-git remote add origin https://github.com/USERNAME/banrify-ai.git
-git push -u origin main
+```json
+{"ok":true,"gemini":true}
 ```
 
-استبدل `USERNAME` باسم حسابك واسم المستودع.
+## 4) تعديل موقع GitHub Pages
 
-## النشر الصحيح
+في ملف `index.html` الخاص بموقع GitHub Pages، ابحث عن:
 
-GitHub Pages يشغّل HTML فقط، لذلك لا يكفي لتوليد الصور الحقيقي. انشر مجلد المشروع كاملًا على Render أو Railway أو Vercel Functions.
-
-### Render
-
-1. أنشئ Web Service جديدًا من مستودع GitHub.
-2. Build Command: `npm install`
-3. Start Command: `npm start`
-4. أضف Environment Variables:
-   - `MANUS_API_URL`
-   - `MANUS_API_KEY`
-5. لا تضع قيمة المفتاح داخل `index.html` أو GitHub.
-
-### إذا استضفت الواجهة على GitHub Pages منفصلة
-
-لا تجعل `API_BASE` فارغًا؛ GitHub Pages لا يشغّل `server.mjs`. بعد نشر الخادم على Render، أضف هذا السطر قبل سطر `const API_BASE` في `index.html`:
-
-```html
-<script>
-window.BANRIFY_API_URL = 'https://اسم-الخدمة.onrender.com';
-</script>
+```js
+const API_BASE=window.BANRIFY_API_URL||'https://ضع-رابط-vercel-هنا.vercel.app';
 ```
 
-استبدل الرابط برابط Render الحقيقي ثم ارفع `index.html` مجددًا إلى GitHub. إذا ظهر خطأ `Unexpected token '<'` فهذا يعني أن الواجهة استدعت GitHub Pages أو رابطًا يعيد HTML بدل رابط الخادم الذي يعيد JSON من `/api/generate`.
+واستبدل الرابط برابط مشروع Vercel الحقيقي، مثل:
 
-الطريقة الأسهل: انشر المشروع كاملًا على Render؛ عندها لا تحتاج `API_BASE` لأن `server.mjs` يخدم الواجهة ويعالج `/api/generate` من نفس الرابط.
+```js
+const API_BASE=window.BANRIFY_API_URL||'https://banrify-vercel.vercel.app';
+```
 
-## الأمان
+ثم اضغط `Commit changes`.
 
-لا ترفع `MANUS_API_KEY` إلى GitHub. استخدم Environment Variables في خدمة الاستضافة. إذا ظهر المفتاح في مستودع عام، قم بإلغائه وإنشاء مفتاح جديد فورًا.
+لا تضع مفتاح Gemini في GitHub أو داخل `index.html`.
