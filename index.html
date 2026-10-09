@@ -21,7 +21,7 @@
 <script>
 // عند فصل الواجهة على GitHub Pages ضع رابط Render هنا، مثل:
 // window.BANRIFY_API_URL='https://banrify-ai.onrender.com';
-const API_BASE=window.BANRIFY_API_URL||'';const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let refData='';
+const API_BASE=window.BANRIFY_API_URL||'https://tarekhammam.vercel.app';const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];let refData='';
 function toast(t){const x=$('#toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',2600)}
 $$('.chip').forEach(c=>c.onclick=()=>c.classList.toggle('active'));
 $('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('#thumb').src=r.result;$('#thumb').style.display='block';refData=r.result;toast('تمت إضافة الصورة المرجعية')};r.readAsDataURL(f)};
