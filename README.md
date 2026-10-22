@@ -2,6 +2,16 @@
 
 ## 1) نشر هذا المجلد على Vercel
 
+يجب أن تكون بنية المستودع هكذا (مجلد `api` ضروري، وبدونه يظهر خطأ 404):
+
+```text
+api/generate.js
+api/health.js
+vercel.json
+package.json
+index.html
+```
+
 ارفع محتويات هذا المجلد إلى مستودع GitHub جديد، ثم في Vercel اختر:
 
 `Add New → Project → Import` ثم اختر المستودع واضغط `Deploy`.
