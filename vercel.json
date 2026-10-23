@@ -1,5 +1,6 @@
-{
-  "functions": {
-    "api/*.js": { "maxDuration": 60 }
-  }
-}
+   {
+     "framework": null,
+     "functions": {
+       "api/*.js": { "maxDuration": 60 }
+     }
+   }
